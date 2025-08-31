@@ -1,34 +1,31 @@
+import 'package:e_commerceapp/screens/fav_page.dart';
+import 'package:e_commerceapp/screens/store_page.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+
+  Widget _buildCurrentPage() {
+    if (_currentIndex == 0) return StorePage();
+    if (_currentIndex == 1) {
+      return FavPage();
+    } else {
+      return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFFFF7643),
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.storefront), label: "Store"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: "Fav",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble_outline),
-            label: "Chat",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: "Profile",
-          ),
-        ],
-      ),
       backgroundColor: Colors.white,
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -57,55 +54,32 @@ class Home extends StatelessWidget {
           SizedBox(width: 8),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(16),
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      "A Summer Surprise",
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      "Cashback 20%",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 23),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _iconsCateg(Icons.flash_on, () {}, "Flash Deal"),
-                  _iconsCateg(Icons.receipt_long, () {}, "Bill"),
-                  _iconsCateg(Icons.sports_esports, () {}, "Game"),
-                  _iconsCateg(Icons.card_giftcard, () {}, "Daily Gift"),
-                  _iconsCateg(Icons.explore, () {}, "More"),
-                ],
-              ),
-              SizedBox(height: 23),
-              _section("Special for you", specialItems),
-              SizedBox(height: 23),
-              _section("Popular Products", popularItems),
-            ],
+
+      body: SafeArea(child: _buildCurrentPage()),
+
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFFFF7643),
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _currentIndex,
+        onTap: (i) => setState(() => _currentIndex = i),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.storefront), label: "Store"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_border),
+            label: "Fav",
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: "Chat",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: "Profile",
+          ),
+        ],
       ),
     );
   }
@@ -124,178 +98,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
-  Widget _iconsCateg(IconData icon, VoidCallback onTap, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFE8DE),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: IconButton(
-            onPressed: onTap,
-            icon: Icon(icon, color: Colors.orange, size: 28),
-          ),
-        ),
-        SizedBox(height: 6),
-        SizedBox(
-          width: 60,
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 12, height: 1.2),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _section(String name, List items) {
-    return Column(
-      children: [
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-
-          title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-          trailing: TextButton(
-            onPressed: () {},
-            child: Text("See More", style: TextStyle(color: Colors.grey)),
-          ),
-        ),
-
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              for (final w in items)
-                Padding(padding: const EdgeInsets.only(right: 12), child: w),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  static Widget specialSectionItem(String img, String title, String hint) {
-    return Container(
-      width: 260,
-      height: 120,
-      padding: const EdgeInsets.all(16),
-      alignment: Alignment.topLeft,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          SizedBox(height: 4),
-          Text(hint, style: TextStyle(color: Colors.white70, fontSize: 14)),
-        ],
-      ),
-    );
-  }
-
-  static Widget popularItem(String img, String title, double price) {
-    return SizedBox(
-      width: 150,
-      child: Column(
-        children: [
-          Container(
-            height: 150,
-            width: 150,
-
-            decoration: BoxDecoration(
-              color: Color(0xFFF4F4F4),
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Image.asset(img),
-          ),
-
-          Text(
-            title,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "\$${price.toStringAsFixed(2)}",
-                style: TextStyle(
-                  color: Color(0xFFFF7643),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFF4F4F4),
-                ),
-                child: Center(
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.favorite),
-                    iconSize: 15,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  static List specialItems = [
-    specialSectionItem(
-      'assets/images/ImageBanner2.png',
-      'Smartphone',
-      '18 Brands',
-    ),
-    specialSectionItem(
-      'assets/images/ImageBanner3.png',
-      'Fashion',
-      '24 Brands',
-    ),
-  ];
-
-  static List popularItems = [
-    popularItem(
-      "assets/images/ImagePopularProduct1.png",
-      "Wireless Conroller for PS4",
-      64.99,
-    ),
-
-    popularItem(
-      "assets/images/ImagePopularProduct2.png",
-      "Nike Sport White - Man Pant",
-      50.5,
-    ),
-    popularItem(
-      "assets/images/ImagePopularProduct 3.png",
-      "Bicycle Helmet - Red/Yellow Gradien",
-      36.1,
-    ),
-  ];
 }
