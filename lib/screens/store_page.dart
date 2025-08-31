@@ -1,6 +1,7 @@
 import 'package:e_commerceapp/data/products.dart';
 import 'package:e_commerceapp/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class StorePage extends StatefulWidget {
   const StorePage({super.key});
@@ -33,7 +34,7 @@ class _StorePageState extends State<StorePage> {
               color: Colors.deepPurple,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -52,15 +53,15 @@ class _StorePageState extends State<StorePage> {
               ],
             ),
           ),
-          const SizedBox(height: 23),
+          SizedBox(height: 23),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _iconsCateg(Icons.flash_on, () {}, "Flash Deal"),
-              _iconsCateg(Icons.receipt_long, () {}, "Bill"),
-              _iconsCateg(Icons.sports_esports, () {}, "Game"),
-              _iconsCateg(Icons.card_giftcard, () {}, "Daily Gift"),
-              _iconsCateg(Icons.explore, () {}, "More"),
+              _iconsCateg("assets/icons/Flash Icon.svg", () {}, "Flash Deal"),
+              _iconsCateg("assets/icons/Bill Icon.svg", () {}, "Bill"),
+              _iconsCateg("assets/icons/Game Icon.svg", () {}, "Game"),
+              _iconsCateg("assets/icons/Gift Icon.svg", () {}, "Daily Gift"),
+              _iconsCateg("assets/icons/Discover.svg", () {}, "More"),
             ],
           ),
           SizedBox(height: 23),
@@ -72,7 +73,7 @@ class _StorePageState extends State<StorePage> {
     );
   }
 
-  Widget _iconsCateg(IconData icon, VoidCallback onTap, String label) {
+  Widget _iconsCateg(String iconPath, VoidCallback onTap, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -80,15 +81,12 @@ class _StorePageState extends State<StorePage> {
           width: 60,
           height: 60,
           decoration: BoxDecoration(
-            color: const Color(0xFFFFE8DE),
+            color: Color(0xFFFFE8DE),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: IconButton(
-            onPressed: onTap,
-            icon: Icon(icon, color: Colors.orange, size: 28),
-          ),
+          child: IconButton(onPressed: onTap, icon: SvgPicture.asset(iconPath)),
         ),
-        const SizedBox(height: 6),
+        SizedBox(height: 6),
         SizedBox(
           width: 60,
           child: Text(
@@ -106,25 +104,22 @@ class _StorePageState extends State<StorePage> {
   Widget _section(String name, List<Widget> items) {
     return Column(
       children: [
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          title: Text(
-            name,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
           trailing: TextButton(
             onPressed: () {},
-            child: const Text("See More", style: TextStyle(color: Colors.grey)),
+            child: Text("See More", style: TextStyle(color: Colors.grey)),
           ),
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
               for (final w in items)
-                Padding(padding: const EdgeInsets.only(right: 12), child: w),
+                Padding(padding: EdgeInsets.only(right: 12), child: w),
             ],
           ),
         ),
@@ -136,7 +131,7 @@ class _StorePageState extends State<StorePage> {
     return Container(
       width: 260,
       height: 120,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
@@ -154,7 +149,7 @@ class _StorePageState extends State<StorePage> {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             hint,
             style: const TextStyle(color: Colors.white70, fontSize: 14),
@@ -180,10 +175,13 @@ class _StorePageState extends State<StorePage> {
             child: Image.asset(p.img),
           ),
           SizedBox(height: 8),
-          Text(
-            p.name,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          SizedBox(
+            width: double.infinity, 
+            child: Text(
+              p.name,
+              textAlign: TextAlign.left,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
           ),
           SizedBox(height: 6),
           Row(
@@ -191,7 +189,7 @@ class _StorePageState extends State<StorePage> {
             children: [
               Text(
                 "\$${p.price.toStringAsFixed(2)}",
-                style: const TextStyle(
+                style: TextStyle(
                   color: Color(0xFFFF7643),
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

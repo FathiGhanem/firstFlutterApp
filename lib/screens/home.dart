@@ -1,6 +1,7 @@
 import 'package:e_commerceapp/screens/fav_page.dart';
 import 'package:e_commerceapp/screens/store_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -48,15 +49,14 @@ class _HomeState extends State<Home> {
           ),
         ),
         actions: [
-          _appBarIcon(Icons.shopping_cart_outlined, () {}),
+          _appBarIcon("assets/icons/Cart Icon.svg", () {}),
           SizedBox(width: 8),
-          _appBarIcon(Icons.notifications_none, () {}),
+          _appBarIcon("assets/icons/Bell.svg", () {}),
           SizedBox(width: 8),
         ],
       ),
 
       body: SafeArea(child: _buildCurrentPage()),
-
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFFFF7643),
@@ -66,17 +66,64 @@ class _HomeState extends State<Home> {
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.storefront), label: "Store"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
+            icon: SvgPicture.asset(
+              "assets/icons/Shop Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Shop Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Color(0xFFFF7643), BlendMode.srcIn),
+            ),
+            label: "Store",
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/icons/Heart Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Heart Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Color(0xFFFF7643), BlendMode.srcIn),
+            ),
             label: "Fav",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat_bubble_outline),
+            icon: SvgPicture.asset(
+              "assets/icons/Chat bubble Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Chat bubble Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Color(0xFFFF7643), BlendMode.srcIn),
+            ),
             label: "Chat",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon: SvgPicture.asset(
+              "assets/icons/User Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/User Icon.svg",
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(Color(0xFFFF7643), BlendMode.srcIn),
+            ),
             label: "Profile",
           ),
         ],
@@ -84,7 +131,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _appBarIcon(IconData icon, VoidCallback onTap) {
+  Widget _appBarIcon(String iconPath, VoidCallback onTap) {
     return Container(
       width: 36,
       height: 36,
@@ -92,10 +139,7 @@ class _HomeState extends State<Home> {
         color: Colors.grey.shade200,
         shape: BoxShape.circle,
       ),
-      child: IconButton(
-        onPressed: onTap,
-        icon: Icon(icon, size: 20, color: Colors.grey),
-      ),
+      child: IconButton(onPressed: onTap, icon: SvgPicture.asset(iconPath)),
     );
   }
 }
