@@ -1,4 +1,5 @@
 import 'package:e_commerceapp/screens/fav_page.dart';
+import 'package:e_commerceapp/screens/profile_end_drawer.dart';
 import 'package:e_commerceapp/screens/store_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentIndex = 0;
 
   Widget _buildCurrentPage() {
@@ -25,6 +27,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: ProfileDrawer(),
       backgroundColor: Colors.white,
 
       appBar: AppBar(
@@ -59,12 +63,18 @@ class _HomeState extends State<Home> {
       body: SafeArea(child: _buildCurrentPage()),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFFFF7643),
+        selectedItemColor: Color(0xFFFF7643),
         unselectedItemColor: Colors.grey,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: _currentIndex,
-        onTap: (i) => setState(() => _currentIndex = i),
+        onTap: (i) {
+          if (i == 3) {
+            _scaffoldKey.currentState?.openEndDrawer();
+            return;
+          }
+          setState(() => _currentIndex = i);
+        },
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
