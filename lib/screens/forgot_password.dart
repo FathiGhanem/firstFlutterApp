@@ -12,7 +12,6 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -24,15 +23,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
                 Column(
                   children: [
-                    Text("Fortgot Password", style: theme.textTheme.titleLarge),
                     Text(
-                      "please enter your email and we will send",
-                      style: theme.textTheme.titleMedium,
+                      "Fortgot Password",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Text(
-                      "you a link to return to your account",
-                      style: theme.textTheme.titleMedium,
-                    ),
+                    Text("please enter your email and we will send"),
+                    Text("you a link to return to your account"),
                   ],
                 ),
                 InputApp(
@@ -40,12 +39,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   hint: "Enter Your Email",
                   icon: Icons.email_outlined,
                 ),
-                SizedBox(width: double.infinity,child: ContinueB(
-                  onPressed: (){
-                    Navigator.pushNamed(context, Routes.otp);
-                  },
-                )),
-                DontHaveAcc()
+                SizedBox(
+                  width: double.infinity,
+                  child: ContinueB(
+                    onPressed: () {
+                      Navigator.pushNamed(context, Routes.otp);
+                    },
+                  ),
+                ),
+                DontHaveAcc(),
               ],
             ),
           ),

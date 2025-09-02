@@ -25,19 +25,16 @@ class _RegisterState extends State<Register> {
                   children: [
                     Text(
                       "Register Account",
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Text(
-                      "Complete your details or continue",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      "with social media",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                    Text("Complete your details or continue"),
+                    Text("with social media"),
                   ],
                 ),
-            
+
                 SizedBox(
                   height: 405,
                   child: Column(
@@ -59,7 +56,10 @@ class _RegisterState extends State<Register> {
                         icon: Icons.lock_outline_rounded,
                       ),
                       ContinueB(
-                        onPressed: () =>  Navigator.pushNamed(context, Routes.completeProfile),
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          Routes.completeProfile,
+                        ),
                       ),
                     ],
                   ),
@@ -68,9 +68,11 @@ class _RegisterState extends State<Register> {
                 Column(
                   children: [
                     SocialIconsRow(),
-                    Text("By continuing your confirm that you agree" ,style: Theme.of(context).textTheme.titleSmall,)
+                    Text(
+                      "By continuing your confirm that you agree",
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),

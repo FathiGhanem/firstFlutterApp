@@ -17,7 +17,6 @@ class InputApp extends StatefulWidget {
   final String label;
   final String hint;
   final IconData icon;
-  
 
   const InputApp({
     super.key,
@@ -56,7 +55,7 @@ class _InputAppState extends State<InputApp> {
 }
 
 class ContinueB extends StatelessWidget {
-  final VoidCallback onPressed; 
+  final VoidCallback onPressed;
 
   const ContinueB({super.key, required this.onPressed});
 
@@ -64,10 +63,23 @@ class ContinueB extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 50,
       child: ElevatedButton(
-        onPressed: onPressed, 
-        child: const Text("Continue"),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xFFFF7643),
+          padding: EdgeInsets.symmetric(vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          "Continue",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
       ),
     );
   }
@@ -83,7 +95,6 @@ class DontHaveAcc extends StatefulWidget {
 class _DontHaveAccState extends State<DontHaveAcc> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -94,7 +105,7 @@ class _DontHaveAccState extends State<DontHaveAcc> {
             onPressed: () {
               Navigator.pushNamed(context, '/register');
             },
-            child: Text("Sign Up", style: TextStyle(color: theme.primaryColor)),
+            child: Text("Sign Up", style: TextStyle(color: Color(0xFFFF7643))),
           ),
         ],
       ),
@@ -111,9 +122,9 @@ class SocialIconsRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildSocialIcon("assets/icons/google-icon.svg"),
-        const SizedBox(width: 20),
+        SizedBox(width: 20),
         _buildSocialIcon("assets/icons/facebook-2.svg"),
-        const SizedBox(width: 20),
+        SizedBox(width: 20),
         _buildSocialIcon("assets/icons/twitter.svg"),
       ],
     );

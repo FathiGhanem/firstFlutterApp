@@ -106,12 +106,19 @@ class _OnboardingState extends State<Onboarding> {
                 ),
                 onPressed: () {
                   if (isLast) {
-                    Navigator.pushReplacementNamed(context, Routes.home);
+                    Navigator.pushReplacementNamed(context, Routes.signIn);
                   } else {
                     controller.nextPage();
                   }
                 },
-                child: Text(isLast ? "Get Started" : "Continue"),
+                child: Text(
+                  isLast ? "Get Started" : "Continue",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
               ),
             ),
           ],

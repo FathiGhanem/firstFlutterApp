@@ -12,7 +12,6 @@ class Otp extends StatefulWidget {
 class _OtpState extends State<Otp> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -24,22 +23,24 @@ class _OtpState extends State<Otp> {
               children: [
                 Column(
                   children: [
-                    Text("OTP Verification", style: theme.textTheme.titleLarge),
                     Text(
-                      "We Sent your code to +1 898 860 ***",
-                      style: theme.textTheme.bodyMedium,
+                      "OTP Verification",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    Text("We Sent your code to +1 898 860 ***"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "This code will expired in ",
-                          style: theme.textTheme.bodyMedium,
                           textAlign: TextAlign.center,
                         ),
                         Text(
                           "00:13",
-                          style: TextStyle(color: theme.primaryColor),
+                          style: TextStyle(color: Color(0xFFFF7643)),
                         ),
                       ],
                     ),
@@ -52,9 +53,9 @@ class _OtpState extends State<Otp> {
                     children: [OtpBox(), OtpBox(), OtpBox(), OtpBox()],
                   ),
                 ),
-            
+
                 ContinueB(
-                  onPressed: () =>  Navigator.pushNamed(context, Routes.home),
+                  onPressed: () => Navigator.pushNamed(context, Routes.home),
                 ),
                 Resnd(),
               ],
@@ -93,7 +94,6 @@ class _OtpBoxState extends State<OtpBox> {
   }
 }
 
-
 class Resnd extends StatefulWidget {
   const Resnd({super.key});
 
@@ -104,8 +104,9 @@ class Resnd extends StatefulWidget {
 class _ResndState extends State<Resnd> {
   @override
   Widget build(BuildContext context) {
-        final theme = Theme.of(context);
-
-    return TextButton(onPressed: (){}, child: Text("Resend OTP Code", style:theme.textTheme.titleMedium));
+    return TextButton(
+      onPressed: () {},
+      child: Text("Resend OTP Code", style: TextStyle(color: Colors.black)),
+    );
   }
 }

@@ -5,7 +5,6 @@ import 'package:e_commerceapp/screens/otp.dart';
 import 'package:e_commerceapp/screens/register.dart';
 import 'package:e_commerceapp/screens/sign_in.dart';
 import 'package:e_commerceapp/screens/onboarding.dart';
-import 'package:e_commerceapp/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'routing.dart';
@@ -19,18 +18,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: appTheme,
+      theme: ThemeData(fontFamily: "Muli"),
 
       initialRoute: Routes.onboarding,
 
       routes: {
-        Routes.onboarding: (_) => const Onboarding(),
-        Routes.signIn: (_) => const SignIn(),
-        Routes.register: (_) => const Register(),
-        Routes.forgot: (_) => const ForgotPassword(),
-        Routes.otp: (_) => const Otp(),
-        Routes.completeProfile: (_) => const CompleteProfile(),
-        Routes.home: (_) => const Home(),
+        Routes.onboarding: (_) => Onboarding(),
+        Routes.signIn: (_) => SignIn(),
+        Routes.register: (_) => Register(),
+        Routes.forgot: (_) => ForgotPassword(),
+        Routes.otp: (_) => Otp(),
+        Routes.completeProfile: (_) => CompleteProfile(),
+        Routes.home: (_) => Home(),
       },
     );
   }

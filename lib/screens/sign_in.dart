@@ -16,7 +16,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(22.0),
+          padding: EdgeInsets.all(22.0),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,15 +25,18 @@ class _SignInState extends State<SignIn> {
                   children: [
                     Text(
                       "Welcome Back",
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "Sign in with your email and password",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                     Text(
                       "or continue with social media",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -93,7 +96,7 @@ class _SignInState extends State<SignIn> {
 
 class CheckBoxTile extends StatefulWidget {
   const CheckBoxTile({super.key});
-  
+
   @override
   State<CheckBoxTile> createState() => _CheckBoxTileState();
 }
@@ -107,7 +110,7 @@ class _CheckBoxTileState extends State<CheckBoxTile> {
       child: CheckboxListTile(
         value: rememberMe,
         onChanged: (v) => setState(() => rememberMe = v ?? false),
-        title: const Text("Remember me"),
+        title: Text("Remember me"),
         controlAffinity: ListTileControlAffinity.leading,
         dense: true,
       ),
