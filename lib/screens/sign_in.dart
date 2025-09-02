@@ -101,7 +101,7 @@ class _SignInState extends State<SignIn> {
                         ContinueB(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.pushNamed(context, Routes.otp);
+                              Navigator.pushNamed(context, Routes.home);
                             }
                           },
                         ),

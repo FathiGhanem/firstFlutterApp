@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: Text("Continue", style: TextStyle(color: Colors.white)),
-    );
-  }
-}
-
 class InputApp extends StatefulWidget {
   final String label;
   final String hint;
@@ -124,16 +112,16 @@ class SocialIconsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildSocialIcon("assets/icons/google-icon.svg"),
+        buildSocialIcon("assets/icons/google-icon.svg"),
         SizedBox(width: 20),
-        _buildSocialIcon("assets/icons/facebook-2.svg"),
+        buildSocialIcon("assets/icons/facebook-2.svg"),
         SizedBox(width: 20),
-        _buildSocialIcon("assets/icons/twitter.svg"),
+        buildSocialIcon("assets/icons/twitter.svg"),
       ],
     );
   }
 
-  Widget _buildSocialIcon(String assetPath) {
+  Widget buildSocialIcon(String assetPath) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
