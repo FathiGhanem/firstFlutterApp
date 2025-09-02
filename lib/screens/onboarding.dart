@@ -1,4 +1,6 @@
+import 'package:e_commerceapp/routing.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -8,10 +10,10 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
-  final PageController _pageController = PageController();
-  int _current = 0;
+  CarouselSliderController controller = CarouselSliderController();
+  int current = 0;
 
-  final List<String> _images = const [
+  List images = [
     "assets/images/splash_1.png",
     "assets/images/splash_2.png",
     "assets/images/splash_3.png",
@@ -19,84 +21,100 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    bool isLast = current == images.length - 1;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 23),
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              Column(
-                children: [
-                  Text(
-                    "TOKOTO",
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: theme.primaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Welcome to Tokoto. Let's shop!",
-                    style: theme.textTheme.bodySmall,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              Expanded(
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: _images.length,
-                  onPageChanged: (i) => setState(() => _current = i),
-                  itemBuilder: (_, i) =>
-                      Image.asset(_images[i], fit: BoxFit.contain),
-                ),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  _images.length,
-                  (i) => Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    height: 10,
-                    width: _current == i ? 24 : 10,
-                    decoration: BoxDecoration(
-                      color: _current == i
-                          ? theme.primaryColor
-                          : Colors.grey.shade400,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+      body: Padding(
+        padding: EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Text(
+                  "TOKOTO",
+                  style: TextStyle(
+                    color: Color(0xFFFF7643),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
                   ),
                 ),
-              ),
+                SizedBox(height: 6),
+                Text(
+                  "Welcome to Tokoto, Let's shop!",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 24),
-
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    final isLast = _current == _images.length - 1;
-                    if (!isLast) {
-                      _pageController.jumpToPage(_current + 1);
-                    } else {
-                      Navigator.pushNamed(context, '/sign-in');
-                    }
+            Column(
+              children: [
+                CarouselSlider.builder(
+                  carouselController: controller,
+                  itemCount: images.length,
+                  itemBuilder: (context, index, realIndex) {
+                    return Container(
+                      margin: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        image: DecorationImage(
+                          image: AssetImage(images[index]),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
                   },
-                  child: Text(
-                    _current == _images.length - 1 ? "Get Started" : "Continue",
+                  options: CarouselOptions(
+                    height: 320,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                    viewportFraction: 0.85,
+                    onPageChanged: (index, reason) {
+                      setState(() => current = index);
+                    },
                   ),
                 ),
-              ),
+                SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(images.length, (i) {
+                    bool active = i == current;
+                    return AnimatedContainer(
+                      duration: Duration(milliseconds: 200),
+                      margin: EdgeInsets.symmetric(horizontal: 4),
+                      height: 8,
+                      width: active ? 22 : 8,
+                      decoration: BoxDecoration(
+                        color: active ? Color(0xFFFF7643) : Colors.grey,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 16),
-            ],
-          ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFFF7643),
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                onPressed: () {
+                  if (isLast) {
+                    Navigator.pushReplacementNamed(context, Routes.home);
+                  } else {
+                    controller.nextPage();
+                  }
+                },
+                child: Text(isLast ? "Get Started" : "Continue"),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -131,28 +131,40 @@ class _StorePageState extends State<StorePage> {
     return Container(
       width: 260,
       height: 120,
-      padding: EdgeInsets.all(16),
-      alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              color: Colors.black.withValues(alpha: 0.2),
             ),
           ),
-          SizedBox(height: 4),
-          Text(
-            hint,
-            style: const TextStyle(color: Colors.white70, fontSize: 14),
+
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  hint,
+                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -176,7 +188,7 @@ class _StorePageState extends State<StorePage> {
           ),
           SizedBox(height: 8),
           SizedBox(
-            width: double.infinity, 
+            width: double.infinity,
             child: Text(
               p.name,
               textAlign: TextAlign.left,
