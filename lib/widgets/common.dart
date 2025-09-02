@@ -17,12 +17,14 @@ class InputApp extends StatefulWidget {
   final String label;
   final String hint;
   final IconData icon;
+  final String? Function(String?)? validator;
 
   const InputApp({
     super.key,
     required this.label,
     required this.hint,
     required this.icon,
+    required this.validator,
   });
 
   @override
@@ -36,6 +38,7 @@ class _InputAppState extends State<InputApp> {
       width: double.infinity,
       height: 70,
       child: TextFormField(
+        validator: widget.validator,
         decoration: InputDecoration(
           labelText: widget.label,
           hintText: widget.hint,

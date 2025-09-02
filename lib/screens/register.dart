@@ -10,6 +10,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,40 +38,72 @@ class _RegisterState extends State<Register> {
 
                 SizedBox(
                   height: 405,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InputApp(
-                        label: "Email",
-                        hint: "Enter your email",
-                        icon: Icons.email_outlined,
-                      ),
-                      InputApp(
-                        label: "Password",
-                        hint: "Enter your password",
-                        icon: Icons.lock_outline_rounded,
-                      ),
-                      InputApp(
-                        label: "Confirm Password",
-                        hint: "Re-enter your password",
-                        icon: Icons.lock_outline_rounded,
-                      ),
-                      ContinueB(
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          Routes.completeProfile,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InputApp(
+                          label: "Email",
+                          hint: "Enter your email",
+                          icon: Icons.email_outlined,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                !value.contains('@')) {
+                              return "Enter valid Email ";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                      ),
-                    ],
+                        InputApp(
+                          label: "Password",
+                          hint: "Enter your password",
+                          icon: Icons.lock_outline_rounded,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.length < 7) {
+                              return "Enter valid Password ";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        InputApp(
+                          label: "Confirm Password",
+                          hint: "Re-enter your password",
+                          icon: Icons.lock_outline_rounded,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.length < 7) {
+                              return "Enter valid Password ";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        ContinueB(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.completeProfile,
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
                 Column(
                   children: [
                     SocialIconsRow(),
-                    Text(
-                      "By continuing your confirm that you agree",
-                    ),
+                    Text("By continuing your confirm that you agree"),
                   ],
                 ),
               ],

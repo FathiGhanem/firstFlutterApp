@@ -10,6 +10,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 Column(
                   children: [
                     Text(
-                      "Fortgot Password",
+                      "Forgot  Password",
                       style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
@@ -34,16 +35,30 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     Text("you a link to return to your account"),
                   ],
                 ),
-                InputApp(
-                  label: "Email",
-                  hint: "Enter Your Email",
-                  icon: Icons.email_outlined,
+                Form(
+                  key: _formKey,
+                  child: InputApp(
+                    label: "Email",
+                    hint: "Enter Your Email",
+                    icon: Icons.email_outlined,
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          !value.contains('@')) {
+                        return "Enter valid Email ";
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
                 ),
                 SizedBox(
                   width: double.infinity,
                   child: ContinueB(
                     onPressed: () {
-                      Navigator.pushNamed(context, Routes.otp);
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, Routes.otp);
+                      }
                     },
                   ),
                 ),

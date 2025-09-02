@@ -10,6 +10,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,45 +44,69 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   width: double.infinity,
                   height: 500,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InputApp(
-                        label: "Email",
-                        hint: "Enter Your Email",
-                        icon: Icons.email_outlined,
-                      ),
-                      InputApp(
-                        label: "Password",
-                        hint: "Enter Your Password",
-                        icon: Icons.lock_clock_outlined,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 70,
-                        child: Row(
-                          children: [
-                            CheckBoxTile(),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, Routes.forgot);
-                              },
-                              child: Text(
-                                "Forgot Password",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.underline,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InputApp(
+                          label: "Email",
+                          hint: "Enter Your Email",
+                          icon: Icons.email_outlined,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                !value.contains('@')) {
+                              return "Enter valid Email ";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        InputApp(
+                          label: "Password",
+                          hint: "Enter Your Password",
+                          icon: Icons.lock_clock_outlined,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.length < 7) {
+                              return "Enter valid Password";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 70,
+                          child: Row(
+                            children: [
+                              CheckBoxTile(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, Routes.forgot);
+                                },
+                                child: Text(
+                                  "Forgot Password",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      ContinueB(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, Routes.otp),
-                      ),
-                    ],
+                        ContinueB(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushNamed(context, Routes.otp);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Column(children: [SocialIconsRow(), DontHaveAcc()]),
